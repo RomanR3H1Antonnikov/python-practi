@@ -1,7 +1,6 @@
-print("Введите два числа:")
-a, b = int(input()), int(input())
-
 try:
+    print("Введите два числа:")
+    a, b = int(input()), int(input())
     result = a / b
 except ValueError:
     print("Вы ввели нечисловое значение!")
