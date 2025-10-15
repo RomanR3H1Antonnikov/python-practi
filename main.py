@@ -28,5 +28,7 @@ try:
     result = first_num / second_num
 except ZeroDivisionError:
     print("На ноль делить нельзя!!")
+except ValueError:
+    print("Вы ввели нечисловое значение!")
 else:
     print("Результат деления:", result)
