@@ -1,6 +1,3 @@
-from test1 import result
-
-
 def max_number(a, b):
     if a > b:
         return a
@@ -16,7 +13,7 @@ def empty_function():
 
 
 def even_numbers(n):
-    if n % 2 == 0:
+    if n % 2 == 0 and n != 0:
         yield n
 
 
