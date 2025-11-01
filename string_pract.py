@@ -32,19 +32,11 @@
 # ftype_string = f"My age is {age}, I live in {city}"
 # print(format_string, ftype_string)
 
-# spaceline_string = "                something           "
-# print(spaceline_string.strip())
-# facts = "cats says hello"
-# print(facts.replace("hello", "meow"))
-# base = "Python is great"
-# print(base.split())
-# str_sp = ['h', 'e', 'l', 'l', 'o']
-# print("".join(str_sp))
-
-
-result = True
-result = False if int(input("Введите ваш возраст, только число")) < 18 else True
-result = False if input("Вы являетесь гражданином страны?").lower().strip() != "да" else True
-result = False if input("Вы уголовно наказуемый(ая)?").lower().strip() != "нет" else True
-print("Поздравляю, вам можно голосовать на выборах!") if result == True else print("К сожалению,"
-                                                                           " вы не можете принимать участие в выборах")
+spaceline_string = "                something           "
+print(spaceline_string.strip())
+facts = "cats says hello"
+print(facts.replace("hello", "meow"))
+base = "Python is great"
+print(base.split())
+str_sp = ['h', 'e', 'l', 'l', 'o']
+print("".join(str_sp))
