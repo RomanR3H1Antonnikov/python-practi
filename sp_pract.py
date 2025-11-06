@@ -1,11 +1,10 @@
-# Вариант 1 - изменение значений и первого, и последнего элемента
-sp_example = ["one", "two", "three", "four", "five"]
-print(sp_example)
-sp_example[0], sp_example[4] = "new_one", "new_five"
-print(sp_example)
-
-# Вариант 2 - меняем местами с помощью множественного присваивания
-spsp = ["one", "two", "three", "four", "five"]
-print(spsp)
-spsp[0], spsp[4] = spsp[4], spsp[0]
-print(spsp)
+sp1 = [1, 2, 3, 4, 5, 6, 7]
+sp2 = [1, 2, 3, 4]
+sp3 = []
+maxsp = max(sp1, sp2)
+for i in range(0, max(len(sp1), len(sp2))):
+    if i < len(min(sp1, sp2)):
+        sp3.append(max(sp1, sp2)[i] + min(sp1, sp2)[i])
+    else:
+        sp3.append(maxsp[i])
+print(sp3)
