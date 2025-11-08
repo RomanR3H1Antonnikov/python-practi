@@ -1,26 +1,20 @@
-def max_list(list_1, list_2):
+def sum_lists(list_1, list_2):
+    final_list = []
     if len(list_1) >= len(list_2):
-        return list_1
+        maximal_list = list_1
+        minimal_list = list_2
     else:
-        return list_2
+        maximal_list = list_2
+        minimal_list = list_1
 
-
-def min_list(list_1, list_2):
-    if len(list_1) <= len(list_2):
-        return list_1
-    else:
-        return list_2
+    for i in range(len(maximal_list)):
+        if i < len(minimal_list):
+            final_list.append(maximal_list[i] + minimal_list[i])
+        else:
+            final_list.append(maximal_list[i])
+    return final_list
 
 
 list_1 = [1, 2, 3, 4, 5, 6, 7]
 list_2 = [1, 2, 3, 4]
-final_list = []
-maximal_list, minimal_list = max_list(list_1, list_2), min_list(list_1, list_2)
-
-
-for i in range(0, maximal_list):
-    if i < len(minimal_list):
-        final_list.append(maximal_list[i] + minimal_list[i])
-    else:
-        final_list.append(max_list(list_1, list_2)[i])
-print(final_list)
+print(sum_lists(list_1, list_2))
