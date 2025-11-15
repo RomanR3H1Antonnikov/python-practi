@@ -1,10 +1,8 @@
 def book_list_view(library):
-    found_books = False
     for book_title, details in library.items():
         if all(x != '' for x in details.values()):
-            print(f"""Книга: {book_title} Информация о книге: {details} """)
-            found_books = True
-    if not found_books:
+            print(f"Книга: {book_title}\n{library[book_title]["author"]} ({library[book_title]["publishing_year"]}г.)")
+    if not library:
         print("В библиотеке нет книг.")
 
 
