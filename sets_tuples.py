@@ -1,9 +1,9 @@
 def book_list_view(library):
-    for book_title, details in library.items():
-        if all(x != '' for x in details.values()):
-            print(f"Книга: {book_title}\n{library[book_title]["author"]} ({library[book_title]["publishing_year"]}г.)")
     if not library:
         print("В библиотеке нет книг.")
+    else:
+        for book_title in library:
+            print(f"Доступные книги:\n{book_title}")
 
 
 # def add_book(title, author, year):
