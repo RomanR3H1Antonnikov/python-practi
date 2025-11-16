@@ -25,15 +25,15 @@ def add_book(library, title, author, year):
             }
             print(f"""Информация о книге {title} успешно обновлена!""")
         else:
-            print("Ваш ответ не 'Да', операция отменена")
+            print("Вы не ответили 'Да', операция отменена")
 
 
-# def remove_book(title):
-#     if title in library:
-#         del library[title]
-#         print(f'Книга "{title}" успешно удалена из библиотеки')
-#     else:
-#         print("Такой книги нет в библиотеке!")
+def remove_book(title):
+    if title in library:
+        del library[title]
+        print(f'Книга "{title}" успешно удалена из библиотеки')
+    else:
+        print("Такой книги нет в библиотеке!")
 
 
 library = {
