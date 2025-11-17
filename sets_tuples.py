@@ -36,6 +36,26 @@ def remove_book(title):
         print("Такой книги нет в библиотеке!")
 
 
+def issue_book(title):
+    if title in library and library[title]['availability'] != False:
+        library[title]['availability'] = False
+        print(f"Книга {title} выдана!")
+    elif library[title]['availability'] == False:
+        print("Для аренды книги она должна быть в библиотеке.")
+    else:
+        print("Такой книги нет в библиотеке!")
+
+
+def return_book(title):
+    if title in library and library[title]['availability'] == False:
+        library[title]['availability'] = True
+        print(f"Книга {title} возвращена!")
+    elif library[title]['availability'] != False:
+        print("Для возврата книги сначала требуется её арендовать.")
+    else:
+        print("Такой книги нет в истории библиотеки!")
+
+
 library = {
     "Братья Карамазовы": {
     "author": "Ф.М. Достоевский",
@@ -48,5 +68,9 @@ add_book(library, '1984', 'J. Oruell', '1988')
 book_list_view(library)
 add_book(library, '1984', 'J. Oruell', '1988')
 book_list_view(library)
-# remove_book("Братья Карамазовы")
-# book_list_view(library)
+remove_book("Братья Карамазовы")
+print(library)
+return_book('1984')
+print(library)
+issue_book('1984')
+issue_book('1984')
