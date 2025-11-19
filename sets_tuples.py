@@ -12,7 +12,7 @@ def add_book(library, title, author, year):
         library[title] = {
             "author": author,
             "publishing_year": year,
-            "availability": None
+            "availability": True
         }
         print(f"""Книга "{title}" успешно добавлена!""")
     else:
