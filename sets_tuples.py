@@ -28,7 +28,7 @@ def add_book(library, title, author, year):
             print("Вы не ответили 'Да', операция отменена")
 
 
-def remove_book(title):
+def remove_book(library, title):
     if title in library:
         del library[title]
         print(f'Книга "{title}" успешно удалена из библиотеки')
@@ -36,21 +36,21 @@ def remove_book(title):
         print("Такой книги нет в библиотеке!")
 
 
-def issue_book(title):
-    if title in library and library[title]['availability'] != False:
+def issue_book(library, title):
+    if title in library and library[title]['availability']:
         library[title]['availability'] = False
         print(f"Книга {title} выдана!")
-    elif library[title]['availability'] == False:
+    elif not library[title]['availability']:
         print("Для аренды книги она должна быть в библиотеке.")
     else:
         print("Такой книги нет в библиотеке!")
 
 
-def return_book(title):
-    if title in library and library[title]['availability'] == False:
+def return_book(library, title):
+    if title in library and not library[title]['availability']:
         library[title]['availability'] = True
         print(f"Книга {title} возвращена!")
-    elif library[title]['availability'] != False:
+    elif library[title]['availability']:
         print("Для возврата книги сначала требуется её арендовать.")
     else:
         print("Такой книги нет в истории библиотеки!")
@@ -68,9 +68,9 @@ add_book(library, '1984', 'J. Oruell', '1988')
 book_list_view(library)
 add_book(library, '1984', 'J. Oruell', '1988')
 book_list_view(library)
-remove_book("Братья Карамазовы")
-print(library)
-return_book('1984')
-print(library)
-issue_book('1984')
-issue_book('1984')
+remove_book(library, "Братья Карамазовы")
+book_list_view(library)
+return_book(library, '1984')
+book_list_view(library)
+issue_book(library, '1984')
+issue_book(library, '1984')
