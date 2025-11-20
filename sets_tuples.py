@@ -56,14 +56,14 @@ def return_book(library, title):
         print("Такой книги нет в истории библиотеки!")
 
 
-# def find_book(library, title):
-#     if title in library:
-#         condition = "в наличии!"
-#         if not library[title]["availability"]:
-#             condition = "в аренде"
-#         print(f"Книга найдена! Название: '{title}'\nАвтор: {library[title]["author"]}, год выпуска: {library[title]["publishing_year"]}, статус: {condition}")
-#     else:
-#         print(f"Книга {title} не найдена")
+def find_book(library, title):
+    if title in library:
+        condition = "в наличии!"
+        if not library[title]["availability"]:
+            condition = "в аренде"
+        print(f"Книга найдена! Название: '{title}'\nАвтор: {library[title]["author"]}, год выпуска: {library[title]["publishing_year"]}, статус: {condition}")
+    else:
+        print(f"Книга {title} не найдена")
 
 
 library = {
@@ -82,4 +82,4 @@ remove_book(library, "Братья Карамазовы")
 book_list_view(library)
 return_book(library, '1984')
 book_list_view(library)
-# find_book(library, '1984')
+find_book(library, '1984')
