@@ -12,7 +12,7 @@ def add_book(library, title, author, year):
         library[title] = {
             "author": author,
             "publishing_year": year,
-            "availability": True
+            "availability": None
         }
         print(f"""Книга "{title}" успешно добавлена!""")
     else:
@@ -37,23 +37,33 @@ def remove_book(library, title):
 
 
 def issue_book(library, title):
-    if title in library and library[title]['availability']:
+    if title in library and library[title]['availability'] is not False:
         library[title]['availability'] = False
         print(f"Книга {title} выдана!")
-    elif not library[title]['availability']:
+    elif library[title]['availability'] is False:
         print("Для аренды книги она должна быть в библиотеке.")
     else:
         print("Такой книги нет в библиотеке!")
 
 
 def return_book(library, title):
-    if title in library and not library[title]['availability']:
+    if title in library and library[title]['availability'] is False:
         library[title]['availability'] = True
         print(f"Книга {title} возвращена!")
-    elif library[title]['availability']:
+    elif library[title]['availability'] is not False:
         print("Для возврата книги сначала требуется её арендовать.")
     else:
         print("Такой книги нет в истории библиотеки!")
+
+
+# def find_book(library, title):
+#     if title in library:
+#         condition = "в наличии!"
+#         if not library[title]["availability"]:
+#             condition = "в аренде"
+#         print(f"Книга найдена! Название: '{title}'\nАвтор: {library[title]["author"]}, год выпуска: {library[title]["publishing_year"]}, статус: {condition}")
+#     else:
+#         print(f"Книга {title} не найдена")
 
 
 library = {
@@ -72,5 +82,4 @@ remove_book(library, "Братья Карамазовы")
 book_list_view(library)
 return_book(library, '1984')
 book_list_view(library)
-issue_book(library, '1984')
-issue_book(library, '1984')
+# find_book(library, '1984')
