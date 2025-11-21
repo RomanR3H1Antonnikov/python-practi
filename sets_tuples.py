@@ -1,3 +1,6 @@
+from fileinput import lineno
+
+
 def book_list_view(library):
     if not library:
         print("В библиотеке нет книг.")
@@ -58,9 +61,11 @@ def return_book(library, title):
 
 def find_book(library, title):
     if title in library:
-        condition = "в наличии!"
-        if not library[title]["availability"]:
-            condition = "в аренде"
+        condition = "Книга в библиотеке, но ее статус не определен"
+        if library[title]["availability"] is False:
+            condition = "Книга выдана"
+        if library[title]["availability"] is True:
+            condition = "Книга доступна"
         print(f"Книга найдена! Название: '{title}'\nАвтор: {library[title]["author"]}, год выпуска: {library[title]["publishing_year"]}, статус: {condition}")
     else:
         print(f"Книга {title} не найдена")
@@ -73,13 +78,9 @@ library = {
     "availability": True
 }}
 
+
 book_list_view(library)
 add_book(library, '1984', 'J. Oruell', '1988')
-book_list_view(library)
-add_book(library, '1984', 'J. Oruell', '1988')
-book_list_view(library)
-remove_book(library, "Братья Карамазовы")
-book_list_view(library)
-return_book(library, '1984')
-book_list_view(library)
-find_book(library, '1984')
+find_book(library, "1984")
+issue_book(library, '1984')
+find_book(library, "1984")
