@@ -1,6 +1,3 @@
-from fileinput import lineno
-
-
 def book_list_view(library):
     if not library:
         print("В библиотеке нет книг.")
@@ -43,8 +40,8 @@ def issue_book(library, title):
     if title in library and library[title]['availability'] is not False:
         library[title]['availability'] = False
         print(f"Книга {title} выдана!")
-    elif library[title]['availability'] is False:
-        print("Для аренды книги она должна быть в библиотеке.")
+    elif title in library and library[title]['availability'] is False:
+        print("Книга уже выдана!")
     else:
         print("Такой книги нет в библиотеке!")
 
@@ -53,7 +50,7 @@ def return_book(library, title):
     if title in library and library[title]['availability'] is False:
         library[title]['availability'] = True
         print(f"Книга {title} возвращена!")
-    elif library[title]['availability'] is not False:
+    elif title in library and library[title]['availability'] is not False:
         print("Для возврата книги сначала требуется её арендовать.")
     else:
         print("Такой книги нет в истории библиотеки!")
@@ -71,6 +68,63 @@ def find_book(library, title):
         print(f"Книга {title} не найдена")
 
 
+def start_menu(library):
+    while True:
+        try:
+            print(f'''Доступные функции:\n1. Список книг в библиотеке\n2. Добавить книгу в библиотеку\n3. Удалить книгу из библиотеки\n4. Арендовать книгу\n5. Вернуть книгу\n6. Поиск книг\n7. Закрыть меню''')
+            print("Введите номер функции: (1 - 7)")
+            command = int(input())
+            if command == 1:
+                book_list_view(library)
+            elif command == 2:
+                print("Введите через запятую название книги, автора и год выпуска:")
+                data = input().split(',')
+                if len(data) == 3:
+                    title, author, year = data[0].strip(), data[1].strip(), data[2].strip()
+                    try:
+                        year = int(data[2].strip())
+                        add_book(library, title, author, year)
+                    except ValueError:
+                        print("Год выпуска должен быть числом!")
+                else:
+                    print("Ошибка: введите данные в формате 'Название, Автор, Год'")
+            elif command == 3:
+                print("Введите название книги, которую хотите удалить:")
+                title = input().strip()
+                if not title:
+                    print("Название книги не может быть пустым!")
+                else:
+                    remove_book(library, title)
+            elif command == 4:
+                print("Введите название книги, которую хотите арендовать:")
+                title = input().strip()
+                if not title:
+                    print("Название книги не может быть пустым!")
+                else:
+                    issue_book(library, title)
+            elif command == 5:
+                print("Введите название книги, которую хотите вернуть в библиотеку:")
+                title = input().strip()
+                if not title:
+                    print("Название книги не может быть пустым!")
+                else:
+                    return_book(library, title)
+            elif command == 6:
+                print("Введите название книги:")
+                title = input().strip()
+                if not title:
+                    print("Название книги не может быть пустым!")
+                else:
+                    find_book(library, title)
+            elif command == 7:
+                print("Работа завершена, хорошего дня!")
+                break
+            else:
+                print("Вы ввели не число от 1 до 7!")
+        except ValueError:
+            print("Команда не введена!")
+
+
 library = {
     "Братья Карамазовы": {
     "author": "Ф.М. Достоевский",
@@ -79,8 +133,4 @@ library = {
 }}
 
 
-book_list_view(library)
-add_book(library, '1984', 'J. Oruell', '1988')
-find_book(library, "1984")
-issue_book(library, '1984')
-find_book(library, "1984")
+start_menu(library)
