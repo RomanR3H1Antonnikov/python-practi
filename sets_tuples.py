@@ -1,3 +1,11 @@
+def get_valid_input(inpt):
+    value = input(inpt).strip()
+    if not value:
+        print("Название книги не может быть пустым!")
+        return None
+    return value
+
+
 def book_list_view(library):
     if not library:
         print("В библиотеке нет книг.")
@@ -69,13 +77,20 @@ def find_book(library, title):
 
 
 def start_menu(library):
+    menu_actions = {
+        1: lambda: book_list_view(library),
+        3: lambda: (lambda title: remove_book(library, title) if title else None)(get_valid_input("Введите название книги, которую хотите удалить:")),
+        4: lambda: (lambda title: issue_book(library, title) if title else None)(get_valid_input("Введите название книги, которую хотите арендовать:")),
+        5: lambda: (lambda title: return_book(library, title) if title else None)(get_valid_input("Введите название книги, которую хотите вернуть в библиотеку:")),
+        6: lambda: (lambda title: find_book(library, title) if title else None)(get_valid_input("Введите название книги, которую хотите найти:")),
+    }
     while True:
         try:
             print(f'''Доступные функции:\n1. Список книг в библиотеке\n2. Добавить книгу в библиотеку\n3. Удалить книгу из библиотеки\n4. Арендовать книгу\n5. Вернуть книгу\n6. Поиск книг\n7. Закрыть меню''')
             print("Введите номер функции: (1 - 7)")
             command = int(input())
-            if command == 1:
-                book_list_view(library)
+            if command in menu_actions:
+                menu_actions[command]()
             elif command == 2:
                 print("Введите через запятую название книги, автора и год выпуска:")
                 data = input().split(',')
@@ -88,34 +103,6 @@ def start_menu(library):
                         print("Год выпуска должен быть числом!")
                 else:
                     print("Ошибка: введите данные в формате 'Название, Автор, Год'")
-            elif command == 3:
-                print("Введите название книги, которую хотите удалить:")
-                title = input().strip()
-                if not title:
-                    print("Название книги не может быть пустым!")
-                else:
-                    remove_book(library, title)
-            elif command == 4:
-                print("Введите название книги, которую хотите арендовать:")
-                title = input().strip()
-                if not title:
-                    print("Название книги не может быть пустым!")
-                else:
-                    issue_book(library, title)
-            elif command == 5:
-                print("Введите название книги, которую хотите вернуть в библиотеку:")
-                title = input().strip()
-                if not title:
-                    print("Название книги не может быть пустым!")
-                else:
-                    return_book(library, title)
-            elif command == 6:
-                print("Введите название книги:")
-                title = input().strip()
-                if not title:
-                    print("Название книги не может быть пустым!")
-                else:
-                    find_book(library, title)
             elif command == 7:
                 print("Работа завершена, хорошего дня!")
                 break
