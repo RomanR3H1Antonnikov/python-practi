@@ -1,9 +1,16 @@
 def get_valid_input(inpt):
-    value = input(inpt).strip()
-    if not value:
+    while True:
+        value = input(inpt).strip()
+        if value:
+            return value
         print("Название книги не может быть пустым!")
-        return None
-    return value
+
+
+def print_menu(menu_texts):
+    print("Доступные функции:")
+    for key in sorted(menu_texts.keys()):
+        print(f"{key}. {menu_texts[key]}")
+    print("Введите номер функции: (1 - 7)")
 
 
 def book_list_view(library):
@@ -13,6 +20,20 @@ def book_list_view(library):
         print("Доступные книги:")
         for book_title in library:
             print(f"'{book_title}'")
+
+
+def add_book_handler(library):
+    print("Введите через запятую название книги, автора и год выпуска:")
+    data = input().split(',')
+    if len(data) == 3:
+        title, author, year_str = data[0].strip(), data[1].strip(), data[2].strip()
+        try:
+            year = int(year_str)
+            add_book(library, title, author, year)
+        except ValueError:
+            print("Год выпуска должен быть числом!")
+    else:
+        print("Ошибка формата")
 
 
 def add_book(library, title, author, year):
@@ -77,37 +98,37 @@ def find_book(library, title):
 
 
 def start_menu(library):
+    text_to_write = "Введите название книги:"
+    menu_texts = {
+        1: "Список книг в библиотеке",
+        2: "Добавить книгу в библиотеку",
+        3: "Удалить книгу из библиотеки",
+        4: "Арендовать книгу",
+        5: "Вернуть книгу",
+        6: "Поиск книг",
+        7: "Закрыть меню"
+    }
     menu_actions = {
         1: lambda: book_list_view(library),
-        3: lambda: (lambda title: remove_book(library, title) if title else None)(get_valid_input("Введите название книги, которую хотите удалить:")),
-        4: lambda: (lambda title: issue_book(library, title) if title else None)(get_valid_input("Введите название книги, которую хотите арендовать:")),
-        5: lambda: (lambda title: return_book(library, title) if title else None)(get_valid_input("Введите название книги, которую хотите вернуть в библиотеку:")),
-        6: lambda: (lambda title: find_book(library, title) if title else None)(get_valid_input("Введите название книги, которую хотите найти:")),
+        2: lambda: add_book_handler(library),
+        3: lambda: (lambda title: remove_book(library, title))(get_valid_input(text_to_write)),
+        4: lambda: (lambda title: issue_book(library, title))(get_valid_input(text_to_write)),
+        5: lambda: (lambda title: return_book(library, title))(get_valid_input(text_to_write)),
+        6: lambda: (lambda title: find_book(library, title))(get_valid_input(text_to_write)),
     }
     while True:
         try:
-            print(f'''Доступные функции:\n1. Список книг в библиотеке\n2. Добавить книгу в библиотеку\n3. Удалить книгу из библиотеки\n4. Арендовать книгу\n5. Вернуть книгу\n6. Поиск книг\n7. Закрыть меню''')
-            print("Введите номер функции: (1 - 7)")
+            print_menu(menu_texts)
             command = int(input())
-            if command in menu_actions:
-                menu_actions[command]()
-            elif command == 2:
-                print("Введите через запятую название книги, автора и год выпуска:")
-                data = input().split(',')
-                if len(data) == 3:
-                    title, author, year = data[0].strip(), data[1].strip(), data[2].strip()
-                    try:
-                        year = int(data[2].strip())
-                        add_book(library, title, author, year)
-                    except ValueError:
-                        print("Год выпуска должен быть числом!")
-                else:
-                    print("Ошибка: введите данные в формате 'Название, Автор, Год'")
-            elif command == 7:
+
+            if command == 7:
                 print("Работа завершена, хорошего дня!")
                 break
+            elif command in menu_actions:
+                menu_actions[command]()
             else:
-                print("Вы ввели не число от 1 до 7!")
+                print("Неверная команда!")
+
         except ValueError:
             print("Команда не введена!")
 
