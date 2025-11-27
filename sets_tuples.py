@@ -6,10 +6,11 @@ def get_valid_input(inpt):
         print("Название книги не может быть пустым!")
 
 
-def print_menu(menu_texts):
+def print_menu(menu_data):
     print("Доступные функции:")
-    for key in sorted(menu_texts.keys()):
-        print(f"{key}. {menu_texts[key]}")
+    for key in sorted(menu_data.keys()):
+        text, _ = menu_data[key]
+        print(f"{key}. {text}")
     print("Введите номер функции: (1 - 7)")
 
 
@@ -99,33 +100,27 @@ def find_book(library, title):
 
 def start_menu(library):
     text_to_write = "Введите название книги:"
-    menu_texts = {
-        1: "Список книг в библиотеке",
-        2: "Добавить книгу в библиотеку",
-        3: "Удалить книгу из библиотеки",
-        4: "Арендовать книгу",
-        5: "Вернуть книгу",
-        6: "Поиск книг",
-        7: "Закрыть меню"
-    }
-    menu_actions = {
-        1: lambda: book_list_view(library),
-        2: lambda: add_book_handler(library),
-        3: lambda: (lambda title: remove_book(library, title))(get_valid_input(text_to_write)),
-        4: lambda: (lambda title: issue_book(library, title))(get_valid_input(text_to_write)),
-        5: lambda: (lambda title: return_book(library, title))(get_valid_input(text_to_write)),
-        6: lambda: (lambda title: find_book(library, title))(get_valid_input(text_to_write)),
+    menu_data = {
+        1: ("Список книг в библиотеке", lambda: book_list_view(library)),
+        2: ("Добавить книгу в библиотеку", lambda: add_book_handler(library)),
+        3: ("Удалить книгу из библиотеки", lambda: remove_book(library, get_valid_input(text_to_write))),
+        4: ("Арендовать книгу", lambda: issue_book(library, get_valid_input(text_to_write))),
+        5: ("Вернуть книгу", lambda: return_book(library, get_valid_input(text_to_write))),
+        6: ("Поиск книг", lambda: find_book(library, get_valid_input(text_to_write))),
+        7: ("Закрыть меню", None)
     }
     while True:
         try:
-            print_menu(menu_texts)
+            print_menu(menu_data)
             command = int(input())
 
             if command == 7:
                 print("Работа завершена, хорошего дня!")
                 break
-            elif command in menu_actions:
-                menu_actions[command]()
+            elif command in menu_data:
+                _, action = menu_data[command]
+                if action:
+                    action()
             else:
                 print("Неверная команда!")
 
